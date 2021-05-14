@@ -1,0 +1,27 @@
+@(book: Form[UpdateBookForm],category: Seq[Category])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.BookController.updateBookHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@book("id").value" type="hidden" />
+    @inputText(book("name"))
+    @inputText(book("description"))
+
+    <select name="category" id="category">
+    @for(cat <- category){
+        @if(cat.id.toString==book("category").value.getOrElse(0)) {
+            <option value="@cat.id" selected>@cat.name</option>
+        }else{
+            <option value="@cat.id">@cat.name</option>
+        }
+
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update Book"/>
+    </div>
+}
