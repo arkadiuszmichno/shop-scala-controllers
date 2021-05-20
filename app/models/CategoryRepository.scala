@@ -7,7 +7,8 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CategoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class CategoryRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig._
@@ -15,7 +16,9 @@ class CategoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(im
 
   class CategoryTable(tag: Tag) extends Table[Category](tag, "category") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
     def name = column[String]("name")
+
     def * = (id, name) <> ((Category.apply _).tupled, Category.unapply)
   }
 
@@ -31,4 +34,7 @@ class CategoryRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(im
   def list(): Future[Seq[Category]] = db.run {
     category.result
   }
+
+  def delete(id: Int): Future[Unit] = db.run(category.filter(_.id === id).delete).map(_ => ())
+
 }

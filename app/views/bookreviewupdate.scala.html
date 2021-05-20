@@ -1,0 +1,26 @@
+@(bookReview: Form[UpdateBookReviewForm],book: Seq[Book])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.BookReviewController.updateBookReviewHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@bookReview("id").value" type="hidden" />
+    @inputText(bookReview("review"))
+
+    <select name="book" id="book">
+    @for(bk <- book){
+        @if(bk.id.toString==bookReview("book").value.getOrElse(0)) {
+            <option value="@bk.id" selected>@bk.name</option>
+        }else{
+            <option value="@bk.id">@bk.name</option>
+        }
+
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Update Book Review"/>
+    </div>
+}

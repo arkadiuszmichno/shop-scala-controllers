@@ -1,0 +1,16 @@
+@(career: Form[UpdateCareerForm])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.CareerController.updateCareerHandle()) {
+    @helper.CSRF.formField
+    <input name="id" id="id" value="@career("id").value" type="hidden" />
+    @inputText(career("position"))
+    @inputText(career("description"))
+
+    <div class="buttons">
+        <input type="submit" value="Update career"/>
+    </div>
+}

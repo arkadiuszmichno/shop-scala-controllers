@@ -1,0 +1,15 @@
+@(discountCoupon: Form[CreateDiscountCouponForm])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.DiscountCouponController.addDiscountCouponHandle()) {
+    @helper.CSRF.formField
+    @inputText(discountCoupon("name"))
+    @inputText(discountCoupon("value"))
+
+    <div class="buttons">
+        <input type="submit" value="Add discountCoupon"/>
+    </div>
+}

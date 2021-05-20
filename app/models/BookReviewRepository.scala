@@ -7,22 +7,17 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class BookReviewRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRepository: UserRepository, bookRepository: BookRepository)(implicit ec: ExecutionContext) {
+class BookReviewRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, bookRepository: BookRepository)(implicit ec: ExecutionContext) {
 
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import bookRepository.BookTable
   import dbConfig._
   import profile.api._
-  import userRepository.UserTable
 
   private class BookReviewTable(tag: Tag) extends Table[BookReview](tag, "bookReview") {
 
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-
-    def user = column[Long]("user")
-
-    def user_fk = foreignKey("user_fk", user, usr)(_.id)
 
     def book = column[Long]("book")
 
@@ -30,19 +25,18 @@ class BookReviewRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, u
 
     def review = column[String]("review")
 
-    def * = (id, user, book, review) <> ((BookReview.apply _).tupled, BookReview.unapply)
+    def * = (id, book, review) <> ((BookReview.apply _).tupled, BookReview.unapply)
   }
 
   private val bkReview = TableQuery[BookReviewTable]
-  private val usr = TableQuery[UserTable]
   private val bk = TableQuery[BookTable]
 
 
-  def create(user: Long, book: Long, review: String): Future[BookReview] = db.run {
-    (bkReview.map(b => (b.user, b.book, b.review))
+  def create(book: Long, review: String): Future[BookReview] = db.run {
+    (bkReview.map(b => (b.book, b.review))
       returning bkReview.map(_.id)
-      into { case ((user, book, review), id) => BookReview(id, user, book, review) }
-      ) += (user, book, review)
+      into { case ((book, review), id) => BookReview(id, book, review) }
+      ) += (book, review)
   }
 
   def list(): Future[Seq[BookReview]] = db.run {

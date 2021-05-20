@@ -1,0 +1,20 @@
+@(bookReview: Form[CreateBookReviewForm], book: Seq[Book])(implicit request: MessagesRequestHeader, flash: Flash)
+
+    @import helper._
+
+    @flash.get("success").getOrElse("")
+
+    @form(routes.BookReviewController.addBookReviewHandle()) {
+        @helper.CSRF.formField
+        @inputText(bookReview("review"))
+
+        <select name="book" id="book">
+        @for(cat <- book) {
+            <option value="@cat.id">@cat.name</option>
+        }
+        </select>
+
+        <div class="buttons">
+            <input type="submit" value="Add Book Review"/>
+        </div>
+    }

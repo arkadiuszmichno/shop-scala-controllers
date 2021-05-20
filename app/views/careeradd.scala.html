@@ -1,0 +1,15 @@
+@(career: Form[CreateCareerForm])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.CareerController.addCareerHandle()) {
+    @helper.CSRF.formField
+    @inputText(career("position"))
+    @inputText(career("description"))
+
+    <div class="buttons">
+        <input type="submit" value="Add career"/>
+    </div>
+}

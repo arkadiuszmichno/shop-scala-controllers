@@ -1,0 +1,19 @@
+@(cart: Form[CreateCartForm],user: Seq[User])(implicit request: MessagesRequestHeader, flash: Flash)
+
+@import helper._
+
+@flash.get("success").getOrElse("")
+
+@form(routes.UserController.addUserHandle()) {
+    @helper.CSRF.formField
+
+    <select name="user" id="user">
+    @for(usr <- user){
+        <option value="@usr.id">@usr.firstName</option>
+    }
+    </select>
+
+    <div class="buttons">
+        <input type="submit" value="Add cart"/>
+    </div>
+}

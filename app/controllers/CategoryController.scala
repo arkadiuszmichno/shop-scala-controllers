@@ -1,31 +1,74 @@
 package controllers
 
-import play.api.mvc.{Action, AnyContent, MessagesAbstractController, MessagesControllerComponents}
+import models.CategoryRepository
+import play.api.data.Form
+import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.libs.json.Json
+import play.api.mvc._
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class CategoryController @Inject()(cc: MessagesControllerComponents)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
+class CategoryController @Inject()(cc: MessagesControllerComponents, categoryRepository: CategoryRepository)(implicit ec: ExecutionContext) extends MessagesAbstractController(cc) {
 
-  def addCategory(): Action[AnyContent] = Action { implicit request =>
-    Ok("Added category")
+  val categoryForm: Form[CreateCategoryForm] = Form {
+    mapping(
+      "name" -> nonEmptyText,
+    )(CreateCategoryForm.apply)(CreateCategoryForm.unapply)
   }
 
-  def updateCategory(id: Long): Action[AnyContent] = Action { implicit request =>
-    Ok("Updated category")
+  def getCategories: Action[AnyContent] = Action.async { implicit request =>
+    val fetchedCategories = categoryRepository.list()
+    fetchedCategories.map(categories => Ok(views.html.categories(categories)))
   }
 
-  def getCategory(id: Long): Action[AnyContent] = Action { implicit request =>
-    Ok("Return category")
+  def removeCategory(id: Int): Action[AnyContent] = Action {
+    categoryRepository.delete(id)
+    Redirect("/getcategories")
   }
 
-  def getCategories: Action[AnyContent] = Action { implicit request =>
-    Ok("Return all categories")
+  def addCategory(): Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
+    val categories = categoryRepository.list()
+    categories.map(cat => Ok(views.html.categoryadd(categoryForm)))
   }
 
-  def removeCategory(id: Long): Action[AnyContent] = Action { implicit request =>
-    Ok("Remove category")
+  def addCategoryHandle(): Action[AnyContent] = Action.async { implicit request =>
+    categoryForm.bindFromRequest().fold(
+      errorForm => {
+        Future.successful(
+          BadRequest(views.html.categoryadd(errorForm))
+        )
+      },
+      category => {
+        categoryRepository.create(category.name).map { _ =>
+          Redirect(routes.CategoryController.addCategory()).flashing("success" -> "category created")
+        }
+      }
+    )
+
+  }
+
+  def addCategoryJson(): Action[AnyContent] = Action.async { implicit request =>
+    val name = request.body.asJson.get("name").as[String]
+
+    categoryRepository.create(name).map { category =>
+      Ok(Json.toJson(category))
+    }
+  }
+
+  def getCategoriesJson: Action[AnyContent] = Action.async { implicit request =>
+    categoryRepository.list().map { category =>
+      Ok(Json.toJson(category))
+    }
+  }
+
+  def removeCategoryJson(id: Int): Action[AnyContent] = Action.async { implicit request =>
+    categoryRepository.delete(id).map { _ =>
+      Ok("Category removed")
+    }
   }
 
 }
+
+case class CreateCategoryForm(name: String)

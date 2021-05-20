@@ -28,10 +28,8 @@ CREATE TABLE "bookReview"
 (
     "id"     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "book"   INT     NOT NULL,
-    "user"   INT     NOT NULL,
     "review" INTEGER NOT NULL,
-    FOREIGN KEY (book) references book (id),
-    FOREIGN KEY (user) references user (id)
+    FOREIGN KEY (book) references book (id)
 );
 
 CREATE TABLE "career"
@@ -77,9 +75,7 @@ CREATE TABLE "order"
 CREATE TABLE "return"
 (
     "id"   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "book" INT     NOT NULL,
     "user" INT     NOT NULL,
-    FOREIGN KEY (book) references book (id),
     FOREIGN KEY (user) references user (id)
 );
 
