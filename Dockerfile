@@ -3,7 +3,8 @@ FROM ubuntu:18.04
 #JAVA
 RUN apt-get update &&\
 	apt-get upgrade -y &&\
-	apt-get install -y openjdk-8-jdk
+	apt-get install -y openjdk-8-jdk &&\
+	apt-get install -y software-properties-common
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 ENV PATH $JAVA_HOME/bin:$PATH
@@ -37,9 +38,9 @@ EXPOSE 9000
 RUN useradd -ms /bin/bash amichno
 RUN adduser amichno sudo
 
-USER root
+USER amichno
 WORKDIR /home/amichno/
-RUN mkdir /home/amichno/workshop/
-WORKDIR /home/amichno/workshop/shop
+RUN mkdir workshop
+WORKDIR /home/amichno/workshop
 
 VOLUME ["/home/amichno/workshop"]
