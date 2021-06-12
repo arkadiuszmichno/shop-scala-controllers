@@ -130,8 +130,6 @@ POST          /return                          controllers.ReturnController.addR
 GET           /getusers                        controllers.UserController.getUsers()
 GET           /removeuser/:id                  controllers.UserController.removeUser(id: Long)
 GET           /updateuser/:id                  controllers.UserController.updateUser(id: Long)
-GET           /adduser                         controllers.UserController.addUser()
-POST          /adduserhandle                   controllers.UserController.addUserHandle()
 POST          /updateuserhandle                controllers.UserController.updateUserHandle()
 
 #User Rest
@@ -139,8 +137,13 @@ GET           /user                            controllers.UserController.getUse
 GET           /user/:id                        controllers.UserController.getUserJson(id: Long)
 DELETE        /user/:id                        controllers.UserController.removeUserJson(id: Long)
 PUT           /user/:id                        controllers.UserController.updateUserJson(id: Long)
-POST          /user                            controllers.UserController.addUserJson()
 
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                    controllers.Assets.versioned(path="/public", file: Asset)
+
+# Authentication
+POST          /signUp                          controllers.SignUpController.signUp
+POST          /signIn                          controllers.SignInController.signIn
+POST          /signOut                         controllers.SignInController.signOut
+GET           /authenticate/:provider          controllers.SocialAuthController.authenticate(provider: String)

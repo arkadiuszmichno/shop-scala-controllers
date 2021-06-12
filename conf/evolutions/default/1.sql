@@ -6,15 +6,6 @@ CREATE TABLE "category"
     "name" VARCHAR NOT NULL
 );
 
-CREATE TABLE "user"
-(
-    "id"        INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "firstName" VARCHAR NOT NULL,
-    "lastName"  VARCHAR NOT NULL,
-    "login"     VARCHAR NOT NULL,
-    "gender"    VARCHAR NOT NULL
-);
-
 CREATE TABLE "book"
 (
     "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
@@ -79,6 +70,45 @@ CREATE TABLE "return"
     FOREIGN KEY (user) references user (id)
 );
 
+CREATE TABLE "user"
+(
+    "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "providerId"  VARCHAR NOT NULL,
+    "providerKey" VARCHAR NOT NULL,
+    "email"       VARCHAR NOT NULL,
+    "firstName"   VARCHAR NOT NULL,
+    "lastName"    VARCHAR NOT NULL,
+    "login"       VARCHAR NOT NULL,
+    "gender"      VARCHAR NOT NULL
+);
+
+CREATE TABLE "authToken"
+(
+    "id"     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "userId" INT     NOT NULL,
+    FOREIGN KEY (userId) references user (id)
+);
+
+CREATE TABLE "passwordInfo"
+(
+    "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "providerId"  VARCHAR NOT NULL,
+    "providerKey" VARCHAR NOT NULL,
+    "hasher"      VARCHAR NOT NULL,
+    "password"    VARCHAR NOT NULL,
+    "salt"        VARCHAR
+);
+
+CREATE TABLE "oAuth2Info"
+(
+    "id"          INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "providerId"  VARCHAR NOT NULL,
+    "providerKey" VARCHAR NOT NULL,
+    "accessToken" VARCHAR NOT NULL,
+    "tokenType"   VARCHAR,
+    "expiresIn"   INTEGER
+);
+
 # --- !Downs
 
 DROP TABLE "category" IF EXISTS;
@@ -91,3 +121,7 @@ DROP TABLE "discountCoupon" IF EXISTS;
 DROP TABLE "giftCard" IF EXISTS;
 DROP TABLE "order" IF EXISTS;
 DROP TABLE "return" IF EXISTS;
+DROP TABLE "user" IF EXISTS;
+DROP TABLE "authToken" IF EXISTS;
+DROP TABLE "passwordInfo IF EXISTS";
+DROP TABLE "oAuth2Info" IF EXISTS;

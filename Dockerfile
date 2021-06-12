@@ -38,9 +38,9 @@ EXPOSE 9000
 RUN useradd -ms /bin/bash amichno
 RUN adduser amichno sudo
 
-USER amichno
+USER root
 WORKDIR /home/amichno/
-RUN mkdir workshop
-WORKDIR /home/amichno/workshop
+RUN mkdir /home/amichno/workshop/
+WORKDIR /home/amichno/workshop/shop
 
 VOLUME ["/home/amichno/workshop"]
