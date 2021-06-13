@@ -31,12 +31,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
-      uses: olafurpg/setup-scala@v10
-    - name: run sbt
+      uses: olafurpg/setup-scala@v11
+    - name: compile
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
-        sbt run
+        sbt compile
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
