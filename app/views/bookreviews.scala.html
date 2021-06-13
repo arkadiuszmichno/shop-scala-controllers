@@ -1,7 +1,7 @@
 @(bookReviews: Seq[BookReview])
 
 @for(bookReview <- bookReviews) {
-    <b>@bookReview.book</b>
+    <strong>@bookReview.book</strong>
     @bookReview.review
     <a href="@controllers.routes.BookReviewController.updateBookReview(bookReview.id)">Edit</a>
     <a href="@controllers.routes.BookReviewController.removeBookReview(bookReview.id)">Delete</a>

@@ -19,7 +19,7 @@ class CartRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRep
 
     def user = column[Long]("user")
 
-    def user_fk = foreignKey("user_fk", user, usr)(_.id)
+    def userFk = foreignKey("user_fk", user, usr)(_.id)
 
     def * = (id, user) <> ((Cart.apply _).tupled, Cart.unapply)
   }
@@ -32,8 +32,8 @@ class CartRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRep
     cart.result
   }
 
-  def getByUser(user_id: Long): Future[Seq[Cart]] = db.run {
-    cart.filter(_.user === user_id).result
+  def getByUser(userId: Long): Future[Seq[Cart]] = db.run {
+    cart.filter(_.user === userId).result
   }
 
   def create(user: Long): Future[Cart] = db.run {

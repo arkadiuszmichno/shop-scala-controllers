@@ -21,7 +21,7 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRe
 
     def user = column[Long]("user")
 
-    def user_fk = foreignKey("user_fk", user, usr)(_.id)
+    def userFk = foreignKey("user_fk", user, usr)(_.id)
 
     def price = column[Int]("price")
 
@@ -47,14 +47,14 @@ class OrderRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userRe
     order.filter(_.id === id).result.head
   }
 
-  def getByUser(user_id: Long): Future[Seq[Order]] = db.run {
-    order.filter(_.user === user_id).result
+  def getByUser(userId: Long): Future[Seq[Order]] = db.run {
+    order.filter(_.user === userId).result
   }
 
   def delete(id: Long): Future[Unit] = db.run(order.filter(_.id === id).delete).map(_ => ())
 
-  def update(id: Long, new_bookReview: Order): Future[Unit] = {
-    val bookReviewToUpdate: Order = new_bookReview.copy(id)
+  def update(id: Long, newBookReview: Order): Future[Unit] = {
+    val bookReviewToUpdate: Order = newBookReview.copy(id)
     db.run(order.filter(_.id === id).update(bookReviewToUpdate)).map(_ => ())
   }
 }

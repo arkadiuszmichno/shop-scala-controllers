@@ -1,7 +1,7 @@
 @(giftCards: Seq[GiftCard])
 
 @for(giftCard <- giftCards) {
-    <b>@giftCard.name</b>
+    <strong>@giftCard.name</strong>
     @giftCard.value
     @giftCard.category
     <a href="@controllers.routes.GiftCardController.removeGiftCard(giftCard.id)">Delete</a>

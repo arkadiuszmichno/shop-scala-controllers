@@ -38,7 +38,7 @@ class OrderController @Inject()(cc: MessagesControllerComponents, orderRepositor
 
   def addOrderHandle(): Action[AnyContent] = Action.async { implicit request =>
     var usr: Seq[User] = Seq[User]()
-    val users = userRepository.list().onComplete {
+    userRepository.list().onComplete {
       case Success(cat) => usr = cat
       case Failure(_) => print("fail")
     }
@@ -72,7 +72,7 @@ class OrderController @Inject()(cc: MessagesControllerComponents, orderRepositor
     val user = request.body.asJson.get("user").as[Long]
     val price = request.body.asJson.get("price").as[Int]
 
-    orderRepository.update(id, Order(id, user, price)).map { order =>
+    orderRepository.update(id, Order(id, user, price)).map { _ =>
       Ok("Updated order")
     }
   }

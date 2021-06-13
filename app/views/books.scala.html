@@ -1,7 +1,7 @@
 @(books: Seq[Book])
 
 @for(book <- books) {
-    <b>@book.name</b>
+    <strong>@book.name</strong>
     @book.description
     @book.category
     <a href="@controllers.routes.BookController.updateBook(book.id)">Edit</a>

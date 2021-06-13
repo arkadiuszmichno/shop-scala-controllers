@@ -21,7 +21,7 @@ class ReturnRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, userR
 
     def user = column[Long]("user")
 
-    def user_fk = foreignKey("user_fk", user, usr)(_.id)
+    def userFk = foreignKey("user_fk", user, usr)(_.id)
 
     def * = (id, user) <> ((Return.apply _).tupled, Return.unapply)
   }

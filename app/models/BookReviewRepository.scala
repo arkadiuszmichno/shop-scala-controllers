@@ -21,7 +21,7 @@ class BookReviewRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, b
 
     def book = column[Long]("book")
 
-    def book_fk = foreignKey("book_fk", book, bk)(_.id)
+    def bookFk = foreignKey("book_fk", book, bk)(_.id)
 
     def review = column[String]("review")
 
@@ -49,8 +49,8 @@ class BookReviewRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, b
 
   def delete(id: Long): Future[Unit] = db.run(bkReview.filter(_.id === id).delete).map(_ => ())
 
-  def update(id: Long, new_bookReview: BookReview): Future[Unit] = {
-    val bookReviewToUpdate: BookReview = new_bookReview.copy(id)
+  def update(id: Long, newBookReview: BookReview): Future[Unit] = {
+    val bookReviewToUpdate: BookReview = newBookReview.copy(id)
     db.run(bkReview.filter(_.id === id).update(bookReviewToUpdate)).map(_ => ())
   }
 }

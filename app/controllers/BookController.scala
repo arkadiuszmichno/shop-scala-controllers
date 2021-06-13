@@ -50,7 +50,7 @@ class BookController @Inject()(bookRepository: BookRepository, categoryRepo: Cat
 
   def updateBook(id: Long): Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
     var categ: Seq[Category] = Seq[Category]()
-    val categories = categoryRepo.list().onComplete {
+    categoryRepo.list().onComplete {
       case Success(cat) => categ = cat
       case Failure(_) => print("fail")
     }
@@ -64,7 +64,7 @@ class BookController @Inject()(bookRepository: BookRepository, categoryRepo: Cat
 
   def updateBookHandle(): Action[AnyContent] = Action.async { implicit request =>
     var categ: Seq[Category] = Seq[Category]()
-    val categories = categoryRepo.list().onComplete {
+    categoryRepo.list().onComplete {
       case Success(cat) => categ = cat
       case Failure(_) => print("fail")
     }
@@ -91,7 +91,7 @@ class BookController @Inject()(bookRepository: BookRepository, categoryRepo: Cat
 
   def addBookHandle(): Action[AnyContent] = Action.async { implicit request =>
     var categ: Seq[Category] = Seq[Category]()
-    val categories = categoryRepo.list().onComplete {
+    categoryRepo.list().onComplete {
       case Success(cat) => categ = cat
       case Failure(_) => print("fail")
     }
@@ -113,20 +113,20 @@ class BookController @Inject()(bookRepository: BookRepository, categoryRepo: Cat
 
 
   def addBookJson(): Action[AnyContent] = Action.async { implicit request =>
-    val book_name = request.body.asJson.get("name").as[String]
-    val book_description = request.body.asJson.get("description").as[String]
-    val book_category = request.body.asJson.get("category").as[Int]
+    val bookName = request.body.asJson.get("name").as[String]
+    val bookDescription = request.body.asJson.get("description").as[String]
+    val bookCategory = request.body.asJson.get("category").as[Int]
 
-    bookRepository.create(book_name, book_description, book_category).map { book =>
+    bookRepository.create(bookName, bookDescription, bookCategory).map { book =>
       Ok(Json.toJson(book))
     }
   }
 
   def updateBookJson(id: Long): Action[AnyContent] = Action.async { implicit request =>
-    val book_name = request.body.asJson.get("name").as[String]
-    val book_description = request.body.asJson.get("description").as[String]
-    val book_category = request.body.asJson.get("category").as[Int]
-    bookRepository.update(id, Book(id, book_name, book_description, book_category)).map {book =>
+    val bookName = request.body.asJson.get("name").as[String]
+    val bookDescription = request.body.asJson.get("description").as[String]
+    val bookCategory = request.body.asJson.get("category").as[Int]
+    bookRepository.update(id, Book(id, bookName, bookDescription, bookCategory)).map {_ =>
       Ok("Book updated")
     }
   }

@@ -1,8 +1,8 @@
 @(careers: Seq[Career])
 
 @for(career <- careers) {
-    <b>@career.position</b>
-    <b>@career.description</b>
+    <strong>@career.position</strong>
+    <strong>@career.description</strong>
     <a href="@controllers.routes.CareerController.updateCareer(career.id)">Update</a>
     <a href="@controllers.routes.CareerController.removeCareer(career.id)">Delete</a>
 }

@@ -1,6 +1,6 @@
 @(returns: Seq[Return])
 
 @for(rtrn <- returns) {
-    <b>@rtrn.user</b>
+    <strong>@rtrn.user</strong>
     <a href="@controllers.routes.ReturnController.removeReturn(rtrn.id)">Delete</a>
 }

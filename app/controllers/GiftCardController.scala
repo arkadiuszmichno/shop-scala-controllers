@@ -40,7 +40,7 @@ class GiftCardController @Inject()(cc: MessagesControllerComponents, giftCardRep
 
   def addGiftCardHandle(): Action[AnyContent] = Action.async { implicit request =>
     var categ: Seq[Category] = Seq[Category]()
-    val categories = categoryRepository.list().onComplete {
+    categoryRepository.list().onComplete {
       case Success(cat) => categ = cat
       case Failure(_) => print("fail")
     }

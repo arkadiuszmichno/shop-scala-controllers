@@ -1,6 +1,6 @@
 @(categories: Seq[Category])
 
 @for(category <- categories) {
-    <b>@category.name</b>
+    <strong>@category.name</strong>
     <a href="@controllers.routes.CategoryController.removeCategory(category.id)">Delete</a>
 }

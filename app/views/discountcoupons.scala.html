@@ -1,7 +1,7 @@
 @(discountCoupons: Seq[DiscountCoupon])
 
 @for(discountCoupon <- discountCoupons) {
-    <b>@discountCoupon.name</b>
+    <strong>@discountCoupon.name</strong>
     @discountCoupon.value
     <a href="@controllers.routes.DiscountCouponController.removeDiscountCoupon(discountCoupon.id)">Delete</a>
 }

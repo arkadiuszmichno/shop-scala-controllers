@@ -42,8 +42,8 @@ class CareerRepository @Inject()(dbConfigProvider: DatabaseConfigProvider)(impli
 
   def delete(id: Long): Future[Unit] = db.run(career.filter(_.id === id).delete).map(_ => ())
 
-  def update(id: Long, new_career: Career): Future[Unit] = {
-    val careerToUpdate: Career = new_career.copy(id)
+  def update(id: Long, newCareer: Career): Future[Unit] = {
+    val careerToUpdate: Career = newCareer.copy(id)
     db.run(career.filter(_.id === id).update(careerToUpdate)).map(_ => ())
   }
 }

@@ -24,7 +24,7 @@ class BookRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, val cat
 
     def category = column[Int]("category")
 
-    def category_fk = foreignKey("cat_fk", category, cat)(_.id)
+    def categoryFk = foreignKey("cat_fk", category, cat)(_.id)
 
     def * = (id, name, description, category) <> ((Book.apply _).tupled, Book.unapply)
   }
@@ -46,8 +46,8 @@ class BookRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, val cat
     book.result
   }
 
-  def getByCategory(category_id: Int): Future[Seq[Book]] = db.run {
-    book.filter(_.category === category_id).result
+  def getByCategory(categoryId: Int): Future[Seq[Book]] = db.run {
+    book.filter(_.category === categoryId).result
   }
 
   def getById(id: Long): Future[Book] = db.run {
@@ -58,14 +58,14 @@ class BookRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, val cat
     book.filter(_.id === id).result.headOption
   }
 
-  def getByCategories(category_ids: List[Int]): Future[Seq[Book]] = db.run {
-    book.filter(_.category inSet category_ids).result
+  def getByCategories(categoryIds: List[Int]): Future[Seq[Book]] = db.run {
+    book.filter(_.category inSet categoryIds).result
   }
 
   def delete(id: Long): Future[Unit] = db.run(book.filter(_.id === id).delete).map(_ => ())
 
-  def update(id: Long, new_book: Book): Future[Unit] = {
-    val productToUpdate: Book = new_book.copy(id)
+  def update(id: Long, newBook: Book): Future[Unit] = {
+    val productToUpdate: Book = newBook.copy(id)
     db.run(book.filter(_.id === id).update(productToUpdate)).map(_ => ())
   }
 }

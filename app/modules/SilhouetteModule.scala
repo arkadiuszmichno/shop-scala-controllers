@@ -27,7 +27,6 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Cookie, CookieHeaderEncoding}
 import utils.DefaultEnv
-//import play.api.libs.concurrent.Execution.Implicits._
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.reflect.ClassTag
 

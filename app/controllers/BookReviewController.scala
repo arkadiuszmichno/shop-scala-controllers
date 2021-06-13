@@ -46,7 +46,7 @@ class BookReviewController @Inject()(cc: MessagesControllerComponents, bookRevie
 
   def addBookReviewHandle(): Action[AnyContent] = Action.async { implicit request =>
     var book: Seq[Book] = Seq[Book]()
-    val books = bookRepository.list().onComplete {
+    bookRepository.list().onComplete {
       case Success(bk) => book = bk
       case Failure(_) => print("fail")
     }
@@ -67,7 +67,7 @@ class BookReviewController @Inject()(cc: MessagesControllerComponents, bookRevie
 
   def updateBookReview(id: Long): Action[AnyContent] = Action.async { implicit request: MessagesRequest[AnyContent] =>
     var book: Seq[Book] = Seq[Book]()
-    val books = bookRepository.list().onComplete {
+    bookRepository.list().onComplete {
       case Success(bk) => book = bk
       case Failure(_) => print("fail")
     }
@@ -81,7 +81,7 @@ class BookReviewController @Inject()(cc: MessagesControllerComponents, bookRevie
 
   def updateBookReviewHandle(): Action[AnyContent] = Action.async { implicit request =>
     var book: Seq[Book] = Seq[Book]()
-    val books = bookRepository.list().onComplete {
+    bookRepository.list().onComplete {
       case Success(bk) => book = bk
       case Failure(_) => print("fail")
     }

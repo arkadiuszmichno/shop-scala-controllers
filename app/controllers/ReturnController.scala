@@ -37,7 +37,7 @@ class ReturnController @Inject()(cc: MessagesControllerComponents, returnReposit
 
   def addReturnHandle(): Action[AnyContent] = Action.async { implicit request =>
     var usr: Seq[User] = Seq[User]()
-    val users = userRepository.list().onComplete {
+    userRepository.list().onComplete {
       case Success(cat) => usr = cat
       case Failure(_) => print("fail")
     }

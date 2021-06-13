@@ -59,7 +59,6 @@ class UserController @Inject()(cc: MessagesControllerComponents, userRepository:
   }
 
   def updateUserJson(id: Long): Action[AnyContent] = Action.async { implicit request =>
-//    val loginInfo = request.body.asJson.get("loginInfo").as[String]
     val email = request.body.asJson.get("email").as[String]
     val firstName = request.body.asJson.get("firstName").as[String]
     val lastName = request.body.asJson.get("lastName").as[String]

@@ -25,7 +25,7 @@ class GiftCardRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cat
 
     def category = column[Int]("category")
 
-    def category_fk = foreignKey("cat_fk", category, cat)(_.id)
+    def categoryFk = foreignKey("cat_fk", category, cat)(_.id)
 
     def * = (id, name, value, category) <> ((GiftCard.apply _).tupled, GiftCard.unapply)
   }
@@ -45,8 +45,8 @@ class GiftCardRepository @Inject()(dbConfigProvider: DatabaseConfigProvider, cat
     giftCard.result
   }
 
-  def getByCategory(category_id: Int): Future[Seq[GiftCard]] = db.run {
-    giftCard.filter(_.category === category_id).result
+  def getByCategory(categoryId: Int): Future[Seq[GiftCard]] = db.run {
+    giftCard.filter(_.category === categoryId).result
   }
 
   def getById(id: Long): Future[GiftCard] = db.run {

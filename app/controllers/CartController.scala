@@ -37,7 +37,7 @@ class CartController @Inject()(cc: MessagesControllerComponents, cartRepository:
 
   def addCartHandle(): Action[AnyContent] = Action.async { implicit request =>
     var usr: Seq[User] = Seq[User]()
-    val users = userRepository.list().onComplete {
+    userRepository.list().onComplete {
       case Success(cat) => usr = cat
       case Failure(_) => print("fail")
     }
@@ -66,8 +66,8 @@ class CartController @Inject()(cc: MessagesControllerComponents, cartRepository:
   }
 
 
-  def getCartJson(user_id: Long): Action[AnyContent] = Action.async { implicit request =>
-    cartRepository.getByUser(user_id).map { cart =>
+  def getCartJson(userId: Long): Action[AnyContent] = Action.async { implicit request =>
+    cartRepository.getByUser(userId).map { cart =>
       Ok(Json.toJson(cart))
     }
   }
