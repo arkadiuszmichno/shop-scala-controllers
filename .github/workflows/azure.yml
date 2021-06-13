@@ -22,7 +22,6 @@ on:
 env:
   AZURE_WEBAPP_NAME: shop-scala    # set this to your application's name
   AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: '10.x'                # set this to the node version to use
 
 jobs:
   build-and-deploy:
@@ -31,17 +30,13 @@ jobs:
     environment: production
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ env.NODE_VERSION }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-    - name: npm install, build, and test
+    - name: Set up JDK 1.8
+      uses: actions/setup-scala@v10
+    - name: run sbt
       run: |
         # Build and test the project, then
         # deploy to Azure Web App.
-        npm install
-        npm run build --if-present
-        npm run test --if-present
+        sbt run
     - name: 'Deploy to Azure WebApp'
       uses: azure/webapps-deploy@v2
       with:
