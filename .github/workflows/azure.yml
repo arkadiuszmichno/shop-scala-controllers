@@ -31,7 +31,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 1.8
-      uses: actions/setup-scala@v10
+      uses: olafurpg/setup-scala@v10
     - name: run sbt
       run: |
         # Build and test the project, then
