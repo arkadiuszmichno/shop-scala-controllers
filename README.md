@@ -1,4 +1,4 @@
-# shop-scala-controllers
+# Shop app in scala
 
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=arkadiuszmichno_shop-scala-controllers&metric=code_smells)](https://sonarcloud.io/dashboard?id=arkadiuszmichno_shop-scala-controllers)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=arkadiuszmichno_shop-scala-controllers&metric=bugs)](https://sonarcloud.io/dashboard?id=arkadiuszmichno_shop-scala-controllers)
