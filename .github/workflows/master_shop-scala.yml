@@ -29,9 +29,8 @@ jobs:
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
-        context: .
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_924291c1d9e44462a77f09ccd59b438d }}/amichno/ebiznes:${{ github.sha }}
+        tags: amichno/ebiznes:latest
         file: ./Dockerfile
 
   deploy:
@@ -49,4 +48,4 @@ jobs:
         app-name: 'shop-scala'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_e9189883c004449ea995391f4866d3db }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_924291c1d9e44462a77f09ccd59b438d }}/amichno/ebiznes:${{ github.sha }}'
+        images: 'amichno/ebiznes:latest'
