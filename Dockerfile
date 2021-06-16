@@ -32,6 +32,7 @@ RUN apt-get update &&\
 	apt-get install -y nodejs
 RUN npm install -g npm@latest
 
+EXPOSE 3000
 EXPOSE 9000
 
 RUN useradd -ms /bin/bash amichno
