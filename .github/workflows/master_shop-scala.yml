@@ -30,7 +30,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: amichno/ebiznes:latest
+        tags: amichno/ebiznes-scala:latest
         file: ./Dockerfile
 
   deploy:
@@ -48,4 +48,4 @@ jobs:
         app-name: 'shop-scala'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_e9189883c004449ea995391f4866d3db }}
-        images: 'amichno/ebiznes:latest'
+        images: 'amichno/ebiznes-scala:latest'
