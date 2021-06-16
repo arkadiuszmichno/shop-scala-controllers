@@ -41,5 +41,4 @@ USER root
 WORKDIR /home/amichno/
 RUN mkdir /home/amichno/workshop/
 WORKDIR /home/amichno/workshop/shop
-
-VOLUME ["/home/amichno/workshop"]
+COPY . ./
