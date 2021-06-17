@@ -9,6 +9,8 @@ RUN apt-get update &&\
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 ENV PATH $JAVA_HOME/bin:$PATH
 ENV REDIRECT_URL https://react-service.azurewebsites.net/loggedIn
+ENV REDIRECT_URL_GOOGLE https://scala-shop.azurewebsites.net/authenticate/google
+ENV REDIRECT_URL_FACEBOOK https://scala-shop.azurewebsites.net/authenticate/facebook
 
 #WGET, GNUPG2
 RUN apt update && apt install -y wget &&\
